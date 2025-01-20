@@ -15,9 +15,9 @@ p{
 
 li{
     background-color: gray;
-    padding:5px;
+    padding:8px;
     display:inline;
-    
+    border-radius: 10px;
 }
 header{
     background: rgb(75, 25, 25);
