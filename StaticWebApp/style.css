@@ -1,0 +1,64 @@
+body{
+    line-height: 1.9;
+    background-color: rgb(192, 188, 188);
+    
+}
+h1{
+    color: black;
+    
+}
+p{
+    font-size: 19px;
+    color: rgb(75, 25, 25);
+}
+
+
+li{
+    background-color: gray;
+    padding:8px;
+    display:inline;
+    border-radius: 10px;
+}
+header{
+    background: rgb(75, 25, 25);
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    padding: 1rem;
+    top:0px;
+    left: 0px;
+}
+.spacer
+{
+    width: 100%;
+    height: 190px;
+}
+.spacerSection{
+    width: 100%;
+    height: 22px;
+}
+h2{
+    text-align: center;
+}
+section{
+    background-color: rgb(160, 158, 158);
+    padding: 8px;
+    border-radius: 30px;
+}
+form{
+    
+    display:flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.button{
+    cursor: pointer;
+}
+textarea{
+    resize: none;
+    
+}
+form input, form textarea{
+    padding: 5px;
+    border-radius: 5px;
+}
