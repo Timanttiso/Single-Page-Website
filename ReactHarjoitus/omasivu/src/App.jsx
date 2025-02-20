@@ -2,6 +2,7 @@ import Header from "./components/Header";
 import Spacer from "./components/Spacer";
 import Section from "./components/Section";
 import ContactForm from "./components/ContactForm";
+
 const App = () => {
   return (
     <div>
@@ -40,9 +41,9 @@ const App = () => {
       </main>
       
       
-      
     </div>
   )
+  
 }
 
 export default App
