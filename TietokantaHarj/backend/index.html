@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Company Website Book a Meeting</title>
+    <style>
+        body{
+            line-height: 1.9;
+            background-color: rgb(192, 188, 188);
+            
+        }
+        h1{
+            color: black;
+            
+        }
+        p{
+            font-size: 19px;
+            color: rgb(75, 25, 25);
+        }
+        
+        
+        li{
+            background-color: gray;
+            padding:8px;
+            display:inline;
+            border-radius: 10px;
+        }
+        header{
+            background: rgb(75, 25, 25);
+            text-align: center;
+            position: fixed;
+            width: 100%;
+            padding: 1rem;
+            top:0px;
+            left: 0px;
+        }
+        .spacer
+        {
+            width: 100%;
+            height: 190px;
+        }
+        .spacerSection{
+            width: 100%;
+            height: 22px;
+        }
+        h2{
+            text-align: center;
+        }
+        section{
+            background-color: rgb(160, 158, 158);
+            padding: 8px;
+            border-radius: 30px;
+        }
+        form{
+            
+            display:flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .button{
+            cursor: pointer;
+        }
+        textarea{
+            resize: none;
+            
+        }
+        form input, form textarea{
+            padding: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <section id="book">
+        <h2>Book a Meeting</h2>
+        <p>If you have business with our company fill out the form with your contact information and we will get in contact with you to schedule a meeting as soon as possible. Thank you!</p>
+        <form id="meeting">
+            <input type="text" id="Name" placeholder="Your Name"/>
+            <input type="email" id="email" required placeholder="Email"/>
+            <input type="number" id="number" placeholder="Phonenumber(Optional)"/>
+            <textarea id="reason" placeholder="What does the meeting concern?" rows="5"></textarea>
+            <button type="button" onclick="addMeeting()">Add a meeting</button>
+        </form>
+        <p id="formText"></p>
+        <div class="meeting-list" id="meetingList"></div>
+    </section>
+
+    <script>
+        async function fetchMeetings() {
+            const response = await fetch('/contactRequests');
+            const meetings = await response.json();
+            const meetingList = document.getElementById('meetingList');
+            meetingList.innerHTML = '';
+            meetings.forEach(meeting => {
+                const meetingDiv = document.createElement('div');
+                meetingDiv.classList.add('meetingList-item');
+                meetingDiv.innerHTML = `<span>${meeting.name} - ${meeting.email} - ${meeting.reason}</span>
+                    <div class="actions">
+                        <button onclick="deleteMeeting(${meeting.id})">Poista</button>
+                    </div>`;
+                meetingList.appendChild(meetingDiv);
+            });
+        }
+
+        async function addMeeting() {
+            const name = document.getElementById('Name').value;
+            const email = document.getElementById('email').value;
+            const phonenumber = document.getElementById('number').value;
+            const reason = document.getElementById('reason').value;
+            if (!name || !email ||!reason) {
+                alert('Täytä kaikki kentät!');
+                return;
+            }
+            
+            await fetch('/contactRequests', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({name, email, phonenumber, reason})
+            });
+            
+            document.getElementById('Name').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('number').value = '';
+            document.getElementById('reason').value = '';
+            fetchMeetings();
+        }
+
+        async function deleteMeeting(id) {
+            await fetch(`/contactRequests/${id}`, { method: 'DELETE' });
+            fetchMeetings();
+        }
+
+        fetchMeetings();
+    </script>
+</body>
+</html>
